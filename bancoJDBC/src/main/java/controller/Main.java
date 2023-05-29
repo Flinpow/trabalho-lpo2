@@ -1,3 +1,5 @@
+package controller;
+
 
 import com.mycompany.bancojdbc.dao.ClienteDao;
 import com.mycompany.bancojdbc.model.Cliente;
@@ -19,12 +21,13 @@ public class Main {
     public static void main(String[] args) throws SQLException {
     
         
-        Cliente c = new Cliente("joao", "silva", "1515155", "12121212121", "Rua dos Alfaneiros 501", 5000);
-        ClienteDao.addCliente(c);
-        List<Cliente> list = ClienteDao.getClientes();
-        
-        for(Cliente c1 : list){
-            System.out.println(c1.toString());
-        }
+//        Cliente c = new Cliente("joao", "silva", "1515155", "12121212121", "Rua dos Alfaneiros 501", 5000);
+//        ClienteDao.addCliente(c);
+//        List<Cliente> list = ClienteDao.getClientes();
+//        
+//        for(Cliente c1 : list){
+//            System.out.println(c1.toString());
+//        }
+       ClienteDao.updateCustomerSalary(50.0, "12121212121");
     }
 }

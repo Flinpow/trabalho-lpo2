@@ -5,6 +5,7 @@
 package com.mycompany.bancojdbc.dao;
 
 import com.mycompany.bancojdbc.model.Cliente;
+import org.apache.commons.lang3.StringUtils;
 import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class ClienteDao {
     
-    public static void addCliente(Cliente c) throws SQLException {
+    public static void addCustomer(Cliente c) throws SQLException {
        Connection con = null;
        
        try {
@@ -43,8 +44,8 @@ public class ClienteDao {
         
     }
     
-    public static List<Cliente> getClientes() throws SQLException {
-        List<Cliente> clientes = new ArrayList();
+    public static List<Cliente> getCustomers() throws SQLException {
+        List<Cliente> customers = new ArrayList();
         Connection con = null;
         
         try {
@@ -55,7 +56,7 @@ public class ClienteDao {
             
              while(rs.next()) {
                 Cliente c = new Cliente(rs.getString("nome"), rs.getString("sobrenome"), rs.getString("rg"), rs.getString("cpf"), rs.getString("endereco"), Double.valueOf(rs.getString("salario")));
-                clientes.add(c);
+                customers.add(c);
             }
         }catch(SQLException ex) {
             System.out.println("Problemas ao consultar clientes do banco");
@@ -63,6 +64,136 @@ public class ClienteDao {
         }finally{
             con.close();
         }   
-        return clientes;
+        return customers;
+    }
+    
+    public static void deleteCustomer(String cpf) throws SQLException {
+        Connection con = null;
+       
+       try {
+            con = ConnectionFactory.getConnection();
+            String sql = "DELETE FROM Cliente WHERE Cliente.cpf = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, cpf);
+            
+            stmt.executeUpdate();
+       }catch(SQLException ex) {
+           System.out.println("Problemas ao excluir Cliente");
+           ex.printStackTrace();
+       }finally{
+           con.close();
+       }
+    }
+    // Lógica de atualização do cliente sujeita a mudanças
+    public static void updateCustomerName(String name, String cpf) throws SQLException {
+        Connection con = null;
+       
+       try {
+            con = ConnectionFactory.getConnection();
+            String sql = "UPDATE Cliente SET nome = ? WHERE cpf = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, name);
+            stmt.setString(2, cpf);
+            
+            stmt.executeUpdate();
+       }catch(SQLException ex) {
+           System.out.println("Problemas ao atualizar Cliente");
+           ex.printStackTrace();
+       }finally{
+           con.close();
+       }
+    }
+    
+    public static void updateCustomerLastName(String lastName, String cpf) throws SQLException {
+        Connection con = null;
+       
+       try {
+            con = ConnectionFactory.getConnection();
+            String sql = "UPDATE Cliente SET sobrenome = ? WHERE cpf = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, lastName);
+            stmt.setString(2, cpf);
+            
+            stmt.executeUpdate();
+       }catch(SQLException ex) {
+           System.out.println("Problemas ao atualizar Cliente");
+           ex.printStackTrace();
+       }finally{
+           con.close();
+       }
+    }
+    
+    public static void updateCustomerRg(String rg, String cpf) throws SQLException {
+        Connection con = null;
+       
+       try {
+            con = ConnectionFactory.getConnection();
+            String sql = "UPDATE Cliente SET rg = ? WHERE cpf = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, rg);
+            stmt.setString(2, cpf);
+            
+            stmt.executeUpdate();
+       }catch(SQLException ex) {
+           System.out.println("Problemas ao atualizar Cliente");
+           ex.printStackTrace();
+       }finally{
+           con.close();
+       }
+    }
+    
+    public static void updateCustomerAdress(String adress, String cpf) throws SQLException {
+        Connection con = null;
+       
+       try {
+            con = ConnectionFactory.getConnection();
+            String sql = "UPDATE Cliente SET endereco = ? WHERE cpf = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, adress);
+            stmt.setString(2, cpf);
+            
+            stmt.executeUpdate();
+       }catch(SQLException ex) {
+           System.out.println("Problemas ao atualizar Cliente");
+           ex.printStackTrace();
+       }finally{
+           con.close();
+       }
+    }
+    
+    public static void updateCustomerSalary(Double salary, String cpf) throws SQLException {
+        Connection con = null;
+       
+       try {
+            con = ConnectionFactory.getConnection();
+            String sql = "UPDATE Cliente SET salario = ? WHERE cpf = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, String.valueOf(salary));
+            stmt.setString(2, cpf);
+            
+            stmt.executeUpdate();
+       }catch(SQLException ex) {
+           System.out.println("Problemas ao atualizar Cliente");
+           ex.printStackTrace();
+       }finally{
+           con.close();
+       }
+    }
+    
+    private static String buildSqlUpdate(Cliente c) {
+        String sql = "UPDATE Cliente SET ";
+        if (StringUtils.isNotBlank(c.getNome())) {
+            sql += "nome = ? ";
+        } else if(StringUtils.isNotBlank(c.getSobreNome())) {
+            sql += "sobrenome = ? ";
+        } else if(StringUtils.isNotBlank(c.getRg())) {
+            sql += "rg = ? ";
+        } else if(StringUtils.isNotBlank(c.getEndereco())) {
+            sql += "endereco = ? ";
+        } else if(c.getSalario() > 0) {
+            sql += "salario = ? ";
+        }
+        sql += "WHERE cpf = " + c.getCPF();
+        return sql;
     }
 }
