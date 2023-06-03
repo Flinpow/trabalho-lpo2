@@ -33,11 +33,15 @@ public class ContaCorrente  extends Conta{
         contasCorrente.remove(contaC);
     }
 // ------------------Constructor:---------------- //
-    public ContaCorrente(Cliente dono, double depositoInicial, double limite, int listSize){
-        super(dono, depositoInicial, listSize);
+    public ContaCorrente(Cliente dono, double depositoInicial, double limite, int id){
+        super(dono, depositoInicial, id);
         this.limite = limite;
     }
     
+    public ContaCorrente(Cliente dono, double depositoInicial, double limite){
+        super(dono, depositoInicial);
+        this.limite = limite;
+    }
     public static void addContaCorrente(ContaCorrente conta) {
         contasCorrente.add(conta);
     }

@@ -1,1 +1,24 @@
 /bancoJDBC/target/
+LPOOII - 2023S1/test/TestaRelatorio.java
+LPOOII - 2023S1/test/TestaProfessor.java
+LPOOII - 2023S1/test/TestaFuncionarioDao.java
+LPOOII - 2023S1/test/TestaEstatistica2.java
+LPOOII - 2023S1/test/TestaEstatistica.java
+LPOOII - 2023S1/test/TestaAluno.java
+LPOOII - 2023S1/src/sistemaacademico/Relatorio.java
+LPOOII - 2023S1/src/sistemaacademico/Professor.java
+LPOOII - 2023S1/src/sistemaacademico/Pessoa.java
+LPOOII - 2023S1/src/sistemaacademico/Disciplina.java
+LPOOII - 2023S1/src/sistemaacademico/Aluno.java
+LPOOII - 2023S1/src/org/ufpr/contato/view/ViewContato.java
+LPOOII - 2023S1/src/org/ufpr/contato/view/ViewContato.form
+LPOOII - 2023S1/src/org/ufpr/contato/view/ContatoTableModel.java
+LPOOII - 2023S1/src/org/ufpr/contato/model/dao/ContatoDao.java
+LPOOII - 2023S1/src/org/ufpr/contato/model/dao/ConnectionFactory.java
+LPOOII - 2023S1/src/org/ufpr/contato/model/Contato.java
+LPOOII - 2023S1/src/org/ufpr/contato/controller/Main.java
+LPOOII - 2023S1/src/org/ufpr/contato/controller/ContatoController.java
+LPOOII - 2023S1/src/jdbc/TesteConexao.java
+LPOOII - 2023S1/src/jdbc/sisrh/Pessoa.java
+LPOOII - 2023S1/src/jdbc/sisrh/FuncionarioDao.java
+LPOOII - 2023S1/src/jdbc/sisrh/Funcionario.java

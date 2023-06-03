@@ -66,10 +66,15 @@ public abstract class Conta implements ContaI{
         return false;
     }
 // ------------------Constructor:---------------- //
-    Conta(Cliente dono, double depositoInicial, int listSize){
+    Conta(Cliente dono, double depositoInicial, int id){
+        this.numero = id;
         this.dono = dono;
-        this.saldo = depositoInicial;
-        numero = listSize == 0 ? 0 : listSize +1 ;  
+        this.saldo = depositoInicial; 
+    }
+    
+     Conta(Cliente dono, double depositoInicial){
+        this.dono = dono;
+        this.saldo = depositoInicial; 
     }
     
 }

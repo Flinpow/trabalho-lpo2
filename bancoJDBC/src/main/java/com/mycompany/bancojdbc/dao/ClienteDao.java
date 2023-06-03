@@ -84,6 +84,30 @@ public class ClienteDao {
            con.close();
        }
     }
+    
+    public static Cliente getClienteByCpf(String cpf) throws SQLException {
+        Connection con = null;
+        Cliente cliente = null;
+       
+       try {
+            con = ConnectionFactory.getConnection();
+            String sql = "SELECT * FROM Cliente WHERE Cliente.cpf = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, cpf);
+            ResultSet rs = stmt.executeQuery();
+             while(rs.next()) {
+                cliente = new Cliente(rs.getString("nome"), rs.getString("sobrenome"),rs.getString("rg"), rs.getString("cpf"), rs.getString("endereco"),Double.valueOf(rs.getString("salario")));
+                return cliente;
+             }
+       }catch(SQLException ex) {
+           System.out.println("Problemas ao buscar Cliente");
+           ex.printStackTrace();
+       }finally{
+           con.close();
+       }
+       return cliente;
+    }
+    
     // Lógica de atualização do cliente sujeita a mudanças
     public static void updateCustomerName(String name, String cpf) throws SQLException {
         Connection con = null;

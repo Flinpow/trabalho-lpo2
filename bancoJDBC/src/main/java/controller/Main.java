@@ -2,7 +2,9 @@ package controller;
 
 
 import com.mycompany.bancojdbc.dao.ClienteDao;
+import com.mycompany.bancojdbc.dao.ContaDao;
 import com.mycompany.bancojdbc.model.Cliente;
+import com.mycompany.bancojdbc.model.ContaCorrente;
 import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -28,6 +30,11 @@ public class Main {
 //        for(Cliente c1 : list){
 //            System.out.println(c1.toString());
 //        }
-       ClienteDao.updateCustomerSalary(50.0, "12121212121");
+
+//       ClienteDao.updateCustomerSalary(50.0, "12121212121");
+
+        Cliente cliente = ClienteDao.getClienteByCpf("12121212121");
+        ContaCorrente cc = new ContaCorrente(cliente,500.0, 2000);
+       ContaDao.addContaCorrente(cc,500.0, cliente);
     }
 }
