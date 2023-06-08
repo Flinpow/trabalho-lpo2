@@ -5,6 +5,7 @@ import com.mycompany.bancojdbc.dao.ClienteDao;
 import com.mycompany.bancojdbc.dao.ContaDao;
 import com.mycompany.bancojdbc.model.Cliente;
 import com.mycompany.bancojdbc.model.ContaCorrente;
+import com.mycompany.bancojdbc.model.ContaInvestimento;
 import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -34,7 +35,7 @@ public class Main {
 //       ClienteDao.updateCustomerSalary(50.0, "12121212121");
 
         Cliente cliente = ClienteDao.getClienteByCpf("12121212121");
-        ContaCorrente cc = new ContaCorrente(cliente,500.0, 2000);
-       ContaDao.addContaCorrente(cc,500.0, cliente);
+       ContaInvestimento ci = new ContaInvestimento(cliente,500,100,150);
+       ContaDao.addContaInvestimento(ci, 500);
     }
 }

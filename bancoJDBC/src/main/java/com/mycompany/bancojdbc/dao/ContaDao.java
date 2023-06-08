@@ -21,68 +21,55 @@ import java.util.logging.Logger;
  * @author AlphaPlayerOne
  */
 public class ContaDao {
-    Conta conta;
     ContaInvestimento contaInvestimento;
     ContaCorrente contaCorrente;
     
-    public static void addContaCorrente (ContaCorrente contaCorrente, double saldo, Cliente cliente) throws SQLException {
+    public static void addContaCorrente (ContaCorrente contaCorrente, double depositoInicial) throws SQLException {
         Connection con = null;
        
        try {
-           con = ConnectionFactory.getConnection();
-            addConta(saldo, cliente);
+           con = ConnectionFactory.getConnection();            
            
-            String sql = "INSERT INTO ContaCorrente(contaFk,limite) VALUES (?,?)";
+            String sql = "INSERT INTO ContaCorrente(saldo,clienteFk,limite) VALUES (?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, getContaIdByCpf(cliente.getCPF()));
-            stmt.setString(2, String.valueOf(contaCorrente.getLimite()));
+            stmt.setString(1, String.valueOf(depositoInicial));
+            stmt.setString(2, contaCorrente.getDono().getCPF());
+            stmt.setString(3, String.valueOf(contaCorrente.getLimite()));
             
             stmt.executeUpdate();
        }catch(SQLException ex) {
-           System.out.println("Problemas ao salvar Cliente");
+           System.out.println("Problemas ao salvar Conta Corrente");
            ex.printStackTrace();
        }finally{
            con.close();
        }
     }
     
-   private static void addConta(double saldo, Cliente cliente) throws SQLException {
-       Connection con = null;
-        try {
-            con = ConnectionFactory.getConnection();
-            String sql = "INSERT INTO Conta(saldo,clienteFk) VALUES (?,?)";
+     public static void addContaInvestimento (ContaInvestimento contaInvestimento, double depositoInicial) throws SQLException {
+        Connection con = null;
+       
+       try {
+           con = ConnectionFactory.getConnection();            
+           
+            String sql = "INSERT INTO ContaInvestimento(saldo,clienteFk, montanteMinimo,depositoMinimo) VALUES (?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, String.valueOf(saldo));
-            stmt.setString(2, cliente.getCPF());
+            stmt.setString(1, String.valueOf(depositoInicial));
+            stmt.setString(2, contaInvestimento.getDono().getCPF());
+            stmt.setString(3, String.valueOf(contaInvestimento.getMontanteMinimo()));
+            stmt.setString(4, String.valueOf(contaInvestimento.getDepositoMinimo()));
             
             stmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(ContaDao.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            con.close();
-        }
-   } 
-   
-   private static String getContaIdByCpf(String cpf) throws SQLException {
-        Connection con = null;
-        String contaId = null;
-        try {
-            con = ConnectionFactory.getConnection();
-            String sql = "SELECT Conta.id FROM Conta WHERE Conta.clienteFk = ?";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1,cpf);
-            ResultSet rs = stmt.executeQuery();
-            while(rs.next()) {
-                contaId = rs.getString("id");
-             }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ContaDao.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            con.close();
-            return contaId;
-        }
-   }
+       }catch(SQLException ex) {
+           System.out.println("Problemas ao salvar Conta Investimento");
+           ex.printStackTrace();
+       }finally{
+           con.close();
+       }
+    }
+    
+    
+     
+
    
 // private static ContaCorrente getContaCorrenteByCpf(String cpf) throws SQLException {
 //        Connection con = null;

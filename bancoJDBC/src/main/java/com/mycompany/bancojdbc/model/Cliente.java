@@ -28,7 +28,7 @@ public class Cliente {
     }
     
 
-    public Cliente(String nome, String sobreNome, String rg, String CPF, String endereco, double salario) {
+    public Cliente(String nome, String sobreNome,String CPF, String rg,  String endereco, double salario) {
         this.nome = nome;
         this.sobreNome = sobreNome;
         this.rg = rg;

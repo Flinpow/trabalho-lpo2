@@ -38,12 +38,9 @@ public class ContaInvestimento extends Conta{
     public void remunera(){
         super.saldo += (super.saldo * 0.02);    // remuneracao de 2%
     } 
-      public static void excluir(ContaInvestimento contaI){
-        contasInvestimento.remove(contaI);
-    }
 // ------------------Constructor:---------------- //
-   public ContaInvestimento(Cliente dono, double depositoInicial, double montanteMinimo, double depositoMinimo, int listSize){
-        super(dono, depositoInicial, listSize);
+   public ContaInvestimento(Cliente dono, double depositoInicial, double montanteMinimo, double depositoMinimo){
+        super(dono, depositoInicial);
         this.montanteMinimo = montanteMinimo;
         this.depositoMinimo = depositoMinimo;
     }
@@ -51,14 +48,6 @@ public class ContaInvestimento extends Conta{
     
     public static void addContaInvestimento(ContaInvestimento conta) {
         contasInvestimento.add(conta);
-    }
-    public static ContaInvestimento getContaByCpf(String cpf) {
-        for (ContaInvestimento conta : contasInvestimento) {
-            if(conta.getDono().getCPF().equals(cpf)){
-                return conta;
-            }
-        }
-        return null;
     }
 
     public double getMontanteMinimo() {
