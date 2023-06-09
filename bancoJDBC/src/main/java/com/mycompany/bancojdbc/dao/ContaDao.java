@@ -42,7 +42,7 @@ public class ContaDao {
            ex.printStackTrace();
        }finally{
            con.close();
-       }
+        }
     }
     
      public static void addContaInvestimento (ContaInvestimento contaInvestimento, double depositoInicial) throws SQLException {

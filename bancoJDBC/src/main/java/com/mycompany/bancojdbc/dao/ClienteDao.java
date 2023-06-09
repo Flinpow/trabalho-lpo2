@@ -55,7 +55,7 @@ public class ClienteDao {
             ResultSet rs = stmt.executeQuery(); 
             
              while(rs.next()) {
-                Cliente c = new Cliente(rs.getString("nome"), rs.getString("sobrenome"), rs.getString("rg"), rs.getString("cpf"), rs.getString("endereco"), Double.valueOf(rs.getString("salario")));
+                Cliente c = new Cliente(rs.getString("nome"), rs.getString("sobrenome"),rs.getString("cpf"), rs.getString("rg"), rs.getString("endereco"), Double.valueOf(rs.getString("salario")));
                 customers.add(c);
             }
         }catch(SQLException ex) {
@@ -96,7 +96,7 @@ public class ClienteDao {
             stmt.setString(1, cpf);
             ResultSet rs = stmt.executeQuery();
              while(rs.next()) {
-                cliente = new Cliente(rs.getString("nome"), rs.getString("sobrenome"),rs.getString("rg"), rs.getString("cpf"), rs.getString("endereco"),Double.valueOf(rs.getString("salario")));
+                cliente = new Cliente(rs.getString("nome"), rs.getString("sobrenome"),rs.getString("cpf"),rs.getString("rg"), rs.getString("endereco"),Double.valueOf(rs.getString("salario")));
                 return cliente;
              }
        }catch(SQLException ex) {

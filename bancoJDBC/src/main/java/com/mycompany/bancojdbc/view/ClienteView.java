@@ -76,8 +76,13 @@ public class ClienteView extends javax.swing.JFrame {
         jTableClientes = new javax.swing.JTable();
         salvarBtn = new javax.swing.JButton();
         excluiBtn = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        comboBox = new javax.swing.JComboBox<>();
+        contasBtn = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tela de Clientes");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -157,51 +162,79 @@ public class ClienteView extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Manipulação de Clientes");
+
+        comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Conta Corrente", "Conta Investimento" }));
+        comboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboBoxMouseClicked(evt);
+            }
+        });
+
+        contasBtn.setText("Ir para Contas");
+        contasBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contasBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(189, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(129, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(166, 166, 166)
-                                .addComponent(jLabel2))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(nomeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(sobreNomeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(180, 180, 180)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cpfTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(rgTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(148, 148, 148)
-                                .addComponent(jLabel6))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(salvarBtn)
-                                .addGap(18, 18, 18)
-                                .addComponent(excluiBtn))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(enderecoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(salarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(139, 139, 139))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(contasBtn)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(nomeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(29, 29, 29)
+                                    .addComponent(sobreNomeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(180, 180, 180)
+                                    .addComponent(jLabel4))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(cpfTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(29, 29, 29)
+                                    .addComponent(rgTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(148, 148, 148)
+                                    .addComponent(jLabel6))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(enderecoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(29, 29, 29)
+                                    .addComponent(salarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel1)
+                                    .addGap(166, 166, 166)
+                                    .addComponent(jLabel2))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(salvarBtn)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(excluiBtn)
+                                    .addGap(95, 95, 95)
+                                    .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(166, 166, 166))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(263, 263, 263))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(82, 82, 82))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
@@ -228,15 +261,24 @@ public class ClienteView extends javax.swing.JFrame {
                     .addComponent(enderecoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(salarioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(salvarBtn)
-                    .addComponent(excluiBtn))
-                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(salvarBtn)
+                        .addComponent(excluiBtn)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(contasBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, 780, 740));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 780, 740));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("HighHoldings");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 580, 50));
 
         pack();
         setLocationRelativeTo(null);
@@ -262,8 +304,8 @@ public class ClienteView extends javax.swing.JFrame {
         try {
             String nome = nomeTxt.getText();
             String sobrenome = sobreNomeTxt.getText();
-            String cpf = cpfTxt.getText();
-            String rg = rgTxt.getText();
+            String cpf = cpfTxt.getText().replaceAll("[.-]", "");
+            String rg = rgTxt.getText().replaceAll("[.-]", "");
             String endereco = enderecoTxt.getText();
             String salario = salarioTxt.getText();
                       
@@ -271,15 +313,15 @@ public class ClienteView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null,"Preencha todos os campos!");
                 } else {
                     Cliente c = new Cliente(nome,sobrenome,cpf,rg,endereco,Double.valueOf(salario));
-                    ClienteController.salvarCliente(c);                    
+                    ClienteController.salvarCliente(c);    
+                    limparCampos();
+                    System.out.println("Cliente no salvarBtn():" + c.toString());
                 }           
             atualizaLista();
         } catch(NumberFormatException e) {
             JOptionPane.showMessageDialog(null,"Insira um valor de salário válido!");
         } catch (SQLException ex) {
             Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
-            limparCampos();
         }
     }//GEN-LAST:event_salvarBtnActionPerformed
 
@@ -315,6 +357,24 @@ public class ClienteView extends javax.swing.JFrame {
                 Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
             }
     }//GEN-LAST:event_excluiBtnActionPerformed
+
+    private void comboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxMouseClicked
+
+    }//GEN-LAST:event_comboBoxMouseClicked
+
+    private void contasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contasBtnActionPerformed
+        
+        if(comboBox.getSelectedItem().toString().equalsIgnoreCase("Conta Corrente")){
+            criaContaCorrente();
+        } else if(comboBox.getSelectedItem().toString().equalsIgnoreCase("Conta Investimento")) {
+            
+        } else {
+           JOptionPane.showMessageDialog(null,"Selecione o tipo de conta"); 
+        }
+        
+        
+        
+    }//GEN-LAST:event_contasBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,11 +435,34 @@ public class ClienteView extends javax.swing.JFrame {
         salarioTxt.setText("");
     }
     
+    private void criaContaCorrente() {
+        String cpf = cpfTxt.getText().replaceAll("[.-]", "");
+        
+        if(cpf.trim().isBlank()) {
+            JOptionPane.showMessageDialog(null,"Selecione um Cliente à criar uma conta");
+        } else {
+            try {
+                Cliente cliente = ClienteDao.getClienteByCpf(cpf);
+                System.out.println("Cliente no criaContaCorrente(): " + cliente.toString());
+                if (cliente != null) {
+                    new CriaContaCorrenteView(cliente).setVisible(true);
+                    this.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null,"Nenhum cliente corresponde ao CPF informado!", "Erro",JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
      public void setController(ClienteController controller) {
         this.controller = controller;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboBox;
+    private javax.swing.JButton contasBtn;
     private javax.swing.JFormattedTextField cpfTxt;
     private javax.swing.JFormattedTextField enderecoTxt;
     private javax.swing.JButton excluiBtn;
@@ -389,6 +472,8 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableClientes;

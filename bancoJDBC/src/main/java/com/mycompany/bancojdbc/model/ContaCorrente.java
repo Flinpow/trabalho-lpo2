@@ -33,10 +33,6 @@ public class ContaCorrente  extends Conta{
         contasCorrente.remove(contaC);
     }
 // ------------------Constructor:---------------- //
-    public ContaCorrente(Cliente dono, double depositoInicial, double limite, int id){
-        super(dono, depositoInicial, id);
-        this.limite = limite;
-    }
     
     public ContaCorrente(Cliente dono, double depositoInicial, double limite){
         super(dono, depositoInicial);
@@ -44,16 +40,7 @@ public class ContaCorrente  extends Conta{
     }
     public static void addContaCorrente(ContaCorrente conta) {
         contasCorrente.add(conta);
-    }
-    
-    public static ContaCorrente getContaByCpf(String cpf) {
-        for (ContaCorrente conta : contasCorrente) {
-            if(conta.getDono().getCPF().equals(cpf)){
-                return conta;
-            }
-        }
-        return null;
-    }
+    } 
 
     public double getLimite() {
         return limite;

@@ -31,8 +31,8 @@ public class Cliente {
     public Cliente(String nome, String sobreNome,String CPF, String rg,  String endereco, double salario) {
         this.nome = nome;
         this.sobreNome = sobreNome;
-        this.rg = rg;
         this.CPF = CPF;
+        this.rg = rg;
         this.endereco = endereco;
         this.salario = salario;
     }
@@ -65,7 +65,7 @@ public class Cliente {
     }
 
     public void setCPF(String CPF) {
-        this.CPF = CPF;
+        this.CPF = CPF.replaceAll("[.-]", "");
     }
 
     public String getEndereco() {
