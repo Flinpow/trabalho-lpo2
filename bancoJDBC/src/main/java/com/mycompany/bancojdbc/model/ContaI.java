@@ -4,14 +4,16 @@
  */
 package com.mycompany.bancojdbc.model;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author AlphaPlayerOne
  */
 public interface ContaI {
     
-    public boolean deposita(double valor);
-    public boolean saca(double valor);
+    public boolean deposita(double valor) throws SQLException;
+    public boolean saca(double valor) throws SQLException;
     public Cliente getDono();
     public int getNumero();
     public double getSaldo();

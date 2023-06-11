@@ -18,11 +18,35 @@ import javax.swing.JOptionPane;
 public class ContaController {
     
     
-    public static void criaContaCorrente(ContaCorrente conta) {
+    public static void criaContaCorrente(ContaCorrente conta, double depositoInicial) {
         try {
-            ContaDao.addContaCorrente(conta, conta.getSaldo());
+            ContaDao.addContaCorrente(conta, depositoInicial);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Erro ao Criar Conta", "Erro",JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    public static boolean sacarContaCorrente(ContaCorrente conta, double valor) {
+        try {
+            if (conta.saca(valor)) {
+                JOptionPane.showMessageDialog(null,"Saque Realizado com sucesso", "Sucesso",JOptionPane.INFORMATION_MESSAGE);
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null,"Saldo Insuficiente!", "Erro",JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ContaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public static ContaCorrente getContaCorrenteByCpf(String cpf) {
+        try {
+            return  ContaDao.getContaCorrenteByCpf(cpf);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }

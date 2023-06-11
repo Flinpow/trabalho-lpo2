@@ -66,25 +66,27 @@ public class ContaDao {
            con.close();
        }
     }
-    
-    
      
 
    
-// private static ContaCorrente getContaCorrenteByCpf(String cpf) throws SQLException {
-//        Connection con = null;
-//        try {
-//            con = ConnectionFactory.getConnection();
-//            String sql = "SELECT * FROM Conta WHERE Conta.clienteFk = ?";
-//            PreparedStatement stmt = con.prepareStatement(sql);
-//            stmt.setString(1,cpf);
-//            ResultSet rs = stmt.executeQuery();
-//            return rs.getString("id");
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ContaDao.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            con.close();
-//            return null;
-//        }
-//   }
+ public static ContaCorrente getContaCorrenteByCpf(String cpf) throws SQLException {
+        Connection con = null;
+        ContaCorrente conta = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            String sql = "SELECT * FROM ContaCorrente WHERE clienteFk = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1,cpf);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                conta = new ContaCorrente(ClienteDao.getClienteByCpf(cpf), Double.valueOf(rs.getString("limite")),Integer.valueOf(rs.getString("id")), Double.valueOf(rs.getString("saldo")));            
+                return conta;
+             }
+        } catch (SQLException ex) {
+            Logger.getLogger(ContaDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+        }
+        return null;
+   }
 }

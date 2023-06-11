@@ -5,8 +5,11 @@
 package com.mycompany.bancojdbc.view;
 
 import com.mycompany.bancojdbc.dao.ClienteDao;
+import com.mycompany.bancojdbc.dao.ContaDao;
 import com.mycompany.bancojdbc.model.Cliente;
+import com.mycompany.bancojdbc.model.ContaCorrente;
 import controller.ClienteController;
+import controller.ContaController;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -363,9 +366,18 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_comboBoxMouseClicked
 
     private void contasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contasBtnActionPerformed
-        
-        if(comboBox.getSelectedItem().toString().equalsIgnoreCase("Conta Corrente")){
-            criaContaCorrente();
+        Cliente cliente = getCliente();
+        if(comboBox.getSelectedItem().toString().equalsIgnoreCase("Conta Corrente") && cliente != null){
+            ContaCorrente conta = ContaController.getContaCorrenteByCpf(cliente.getCPF());
+            if (conta != null) {
+                new ContaCorrenteView(conta).setVisible(true) ;
+                this.setVisible(false); 
+            } else {
+                criaContaCorrente(cliente);
+            }
+            
+            
+            
         } else if(comboBox.getSelectedItem().toString().equalsIgnoreCase("Conta Investimento")) {
             
         } else {
@@ -435,25 +447,24 @@ public class ClienteView extends javax.swing.JFrame {
         salarioTxt.setText("");
     }
     
-    private void criaContaCorrente() {
-        String cpf = cpfTxt.getText().replaceAll("[.-]", "");
-        
-        if(cpf.trim().isBlank()) {
-            JOptionPane.showMessageDialog(null,"Selecione um Cliente à criar uma conta");
-        } else {
-            try {
-                Cliente cliente = ClienteDao.getClienteByCpf(cpf);
-                System.out.println("Cliente no criaContaCorrente(): " + cliente.toString());
-                if (cliente != null) {
-                    new CriaContaCorrenteView(cliente).setVisible(true);
-                    this.setVisible(false);
-                } else {
-                    JOptionPane.showMessageDialog(null,"Nenhum cliente corresponde ao CPF informado!", "Erro",JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
+    private void criaContaCorrente(Cliente cliente) {         
+            new CriaContaCorrenteView(cliente).setVisible(true);
+            this.setVisible(false);         
+    }
+    
+    private Cliente getCliente() {
+        Cliente cliente = null;
+        try {
+            String cpf = cpfTxt.getText().replaceAll("[.-]", "");
+            if(cpf.trim().isBlank()){
+                JOptionPane.showMessageDialog(null,"Nenhum cliente corresponde ao CPF informado!", "Erro",JOptionPane.ERROR_MESSAGE);
+            }else{
+                cliente = ClienteDao.getClienteByCpf(cpf);
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return cliente;
     }
     
      public void setController(ClienteController controller) {

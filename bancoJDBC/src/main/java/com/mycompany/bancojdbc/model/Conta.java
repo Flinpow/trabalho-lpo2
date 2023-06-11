@@ -4,6 +4,7 @@
  */
 package com.mycompany.bancojdbc.model;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -18,21 +19,10 @@ public abstract class Conta implements ContaI{
     private int numero;
 // --------------------Metodos:------------------ //   
     @Override
-    public boolean deposita(double valor){
-        if(valor > 0){ 
-            this.saldo += valor;
-            return true;
-        }
-        return false;
-    }
+    public abstract boolean deposita(double valor) throws SQLException; 
     @Override
-    public boolean saca(double valor) {
-        if(valor > 0){ 
-            this.saldo -= valor;
-            return true;
-        }
-        return false;   // se for false, temos que mostrar um informativo do erro ao cliente 
-    }
+    public abstract boolean saca(double valor) throws SQLException;
+    
    @Override
     public Cliente getDono(){
         return dono;
@@ -49,32 +39,15 @@ public abstract class Conta implements ContaI{
     public abstract void remunera();    // abstrato pois sera implementado nas classes filhas
     
     
-    public static boolean clienteTemConta(Cliente cliente) {
-        List<ContaInvestimento> contasInvestimento = ContaInvestimento.getContasInvestimento();
-        List<ContaCorrente> contasCorrente = ContaCorrente.getContasCorrente();
-        
-        for(ContaInvestimento contaI : contasInvestimento){
-            if(contaI.getDono().getCPF().equals(cliente.getCPF())){
-                return true;
-            }
-        }
-        for(ContaCorrente contaC : contasCorrente){
-            if(contaC.getDono().getCPF().equals(cliente.getCPF())){
-                return true;
-            }
-        }
-        return false;
-    }
 // ------------------Constructor:---------------- //
-    Conta(Cliente dono, double depositoInicial, int id){
+    Conta(Cliente dono, int id, double saldo){
         this.numero = id;
         this.dono = dono;
-        this.saldo = depositoInicial; 
+        this.saldo = saldo;
     }
     
-     Conta(Cliente dono, double depositoInicial){
+    Conta(Cliente dono){
         this.dono = dono;
-        this.saldo = depositoInicial; 
     }
     
 }

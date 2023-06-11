@@ -4,9 +4,13 @@
  */
 package com.mycompany.bancojdbc.view;
 
+import com.mycompany.bancojdbc.dao.ContaDao;
 import com.mycompany.bancojdbc.model.Cliente;
 import com.mycompany.bancojdbc.model.ContaCorrente;
 import controller.ContaController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -132,9 +136,9 @@ public class CriaContaCorrenteView extends javax.swing.JFrame {
                         .addGap(41, 41, 41)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(clienteNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(clienteNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -163,23 +167,22 @@ public class CriaContaCorrenteView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(70, 70, 70)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(109, 109, 109))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(27, 27, 27)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -193,9 +196,10 @@ public class CriaContaCorrenteView extends javax.swing.JFrame {
         }else {
             try {
                 System.out.println(cliente.toString());
-                ContaCorrente contaC = new ContaCorrente(cliente, Double.valueOf(depositoInicial), Double.valueOf(limite));
-                ContaController.criaContaCorrente(contaC);
+                ContaCorrente contaC = new ContaCorrente(cliente, Double.valueOf(limite));
+                ContaController.criaContaCorrente(contaC, Double.valueOf(depositoInicial));
                 JOptionPane.showMessageDialog(null,"Conta criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                chamaContaCorrenteView();
             }catch(NumberFormatException e){
                 JOptionPane.showMessageDialog(null,"Insira valores válidos", "Erro",JOptionPane.ERROR_MESSAGE);
             }
@@ -236,6 +240,15 @@ public class CriaContaCorrenteView extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void chamaContaCorrenteView () {
+        try {
+            new ContaCorrenteView(ContaDao.getContaCorrenteByCpf(cliente.getCPF())).setVisible(true);
+            this.setVisible(false);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Erro ao buscar Conta Corrente", "Erro",JOptionPane.ERROR_MESSAGE);
+        }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel clienteNameLabel;
