@@ -89,4 +89,20 @@ public class ContaDao {
         }
         return null;
    }
+ 
+    public static void excluirContasDoCliente(String cpf) throws SQLException {
+        Connection con = null;
+        
+        try {
+            con = ConnectionFactory.getConnection();
+            String sql = "DELETE FROM ContaCorrente WHERE clienteFk = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1,cpf);
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ContaDao.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            con.close();
+        }
+    }
 }

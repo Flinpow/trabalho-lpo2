@@ -17,6 +17,6 @@ public interface ContaI {
     public Cliente getDono();
     public int getNumero();
     public double getSaldo();
-    public void remunera();
+    public void remunera() throws SQLException;
     
 }

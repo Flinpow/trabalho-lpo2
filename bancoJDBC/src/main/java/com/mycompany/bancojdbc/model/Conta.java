@@ -13,33 +13,23 @@ import java.util.List;
  */
 public abstract class Conta implements ContaI{
 
-    // -------------------Atributos:------------------- //
     private Cliente dono;
     protected double saldo;
     private int numero;
-// --------------------Metodos:------------------ //   
+   
     @Override
     public abstract boolean deposita(double valor) throws SQLException; 
     @Override
     public abstract boolean saca(double valor) throws SQLException;
-    
-   @Override
-    public Cliente getDono(){
-        return dono;
-    }
     @Override
-    public int getNumero(){
-        return numero;
-    }
+    public abstract void remunera() throws SQLException;    // abstrato pois sera implementado nas classes filhas
     @Override
-    public double getSaldo(){
-        return saldo;
-    }
+    public Cliente getDono(){ return dono; }
     @Override
-    public abstract void remunera();    // abstrato pois sera implementado nas classes filhas
+    public int getNumero(){return numero;}
+    @Override
+    public double getSaldo(){return saldo;}
     
-    
-// ------------------Constructor:---------------- //
     Conta(Cliente dono, int id, double saldo){
         this.numero = id;
         this.dono = dono;

@@ -341,12 +341,14 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableClientesMouseClicked
 
     private void excluiBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluiBtnActionPerformed
-        String cpf = cpfTxt.getText();
+        Cliente cliente = getCliente();
         try {
-            if(!cpf.trim().strip().isBlank()) {
+            if(!cpfTxt.getText().trim().strip().isBlank()) {
 
-                    if(ClienteDao.getClienteByCpf(cpf) != null) {
-                       ClienteController.excluirCliente(cpf);
+                    if(cliente != null) {
+                        int reply = JOptionPane.showConfirmDialog(null,"Deseja realmente excluir este cliente?\n(Todas as contas vinculadas a este cliente serao apagadas)", "Confirmação", JOptionPane.YES_OPTION);
+                        if(reply == JOptionPane.YES_OPTION)
+                            ClienteController.excluirCliente(cliente.getCPF());
                     } else {  
                         JOptionPane.showMessageDialog(null,"O CPF informado não corresponde a nenhum Cliente no banco!");
                     }

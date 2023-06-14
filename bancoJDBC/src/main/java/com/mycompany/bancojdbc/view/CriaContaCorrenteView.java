@@ -88,6 +88,11 @@ public class CriaContaCorrenteView extends javax.swing.JFrame {
         });
 
         voltarBtn.setText("Voltar");
+        voltarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -205,6 +210,15 @@ public class CriaContaCorrenteView extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_confirmBtnActionPerformed
+
+    private void voltarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarBtnActionPerformed
+    try {
+            new ClienteView().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContaCorrenteView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_voltarBtnActionPerformed
 
     /**
      * @param args the command line arguments
