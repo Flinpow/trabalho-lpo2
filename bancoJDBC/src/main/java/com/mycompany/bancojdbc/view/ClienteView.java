@@ -8,6 +8,7 @@ import com.mycompany.bancojdbc.dao.ClienteDao;
 import com.mycompany.bancojdbc.dao.ContaDao;
 import com.mycompany.bancojdbc.model.Cliente;
 import com.mycompany.bancojdbc.model.ContaCorrente;
+import com.mycompany.bancojdbc.model.ContaInvestimento;
 import controller.ClienteController;
 import controller.ContaController;
 import java.sql.SQLException;
@@ -376,13 +377,16 @@ public class ClienteView extends javax.swing.JFrame {
                 this.setVisible(false); 
             } else {
                 criaContaCorrente(cliente);
+            }            
+        } else if(comboBox.getSelectedItem().toString().equalsIgnoreCase("Conta Investimento") && cliente != null) {
+            ContaInvestimento contaI = ContaController.getContaInvestimentoByCpf(cliente.getCPF());
+            if (contaI != null) {
+                new ContaInvestimentoView(contaI).setVisible(true) ;
+                this.setVisible(false); 
+            } else {
+                criaContaInvestimento(cliente);
             }
-            
-            
-            
-        } else if(comboBox.getSelectedItem().toString().equalsIgnoreCase("Conta Investimento")) {
-            
-        } else {
+        } else if(cliente != null){
            JOptionPane.showMessageDialog(null,"Selecione o tipo de conta"); 
         }
         
@@ -451,6 +455,11 @@ public class ClienteView extends javax.swing.JFrame {
     
     private void criaContaCorrente(Cliente cliente) {         
             new CriaContaCorrenteView(cliente).setVisible(true);
+            this.setVisible(false);         
+    }
+    
+     private void criaContaInvestimento(Cliente cliente) {         
+            new CriaContaInvestimentoView(cliente).setVisible(true);
             this.setVisible(false);         
     }
     

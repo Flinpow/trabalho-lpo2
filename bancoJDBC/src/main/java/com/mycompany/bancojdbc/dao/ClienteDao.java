@@ -71,10 +71,8 @@ public class ClienteDao {
         Connection con = null;
        
        try {
-           if(ContaDao.getContaCorrenteByCpf(cpf)!=null){
+           if(ContaDao.getContaCorrenteByCpf(cpf)!=null || ContaDao.getContaInvestimentoByCpf(cpf) != null){
                ContaDao.excluirContasDoCliente(cpf);
-           }else if(true){
-               
            }
             con = ConnectionFactory.getConnection();
             String sql = "DELETE FROM Cliente WHERE Cliente.cpf = ?";

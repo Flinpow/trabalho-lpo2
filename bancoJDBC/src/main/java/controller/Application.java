@@ -6,6 +6,7 @@ import com.mycompany.bancojdbc.dao.ContaDao;
 import com.mycompany.bancojdbc.model.Cliente;
 import com.mycompany.bancojdbc.model.ContaCorrente;
 import com.mycompany.bancojdbc.model.ContaInvestimento;
+import com.mycompany.bancojdbc.view.InicioView;
 import factory.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,20 +23,7 @@ import java.util.List;
  */
 public class Application {
     public static void main(String[] args) throws SQLException {
-    
-        
-//        Cliente c = new Cliente("joao", "silva", "1515155", "12121212121", "Rua dos Alfaneiros 501", 5000);
-//        ClienteDao.addCliente(c);
-//        List<Cliente> list = ClienteDao.getClientes();
-//        
-//        for(Cliente c1 : list){
-//            System.out.println(c1.toString());
-//        }
-
-//       ClienteDao.updateCustomerSalary(50.0, "12121212121");
-
-        Cliente cliente = ClienteDao.getClienteByCpf("12121212121");
-       ContaInvestimento ci = new ContaInvestimento(cliente,500,100,150);
-       ContaDao.addContaInvestimento(ci, 500);
+           new InicioView().setVisible(true);
     }
+
 }

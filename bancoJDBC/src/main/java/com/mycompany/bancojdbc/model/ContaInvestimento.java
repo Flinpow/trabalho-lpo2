@@ -4,51 +4,103 @@
  */
 package com.mycompany.bancojdbc.model;
 
+import factory.ConnectionFactory;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author AlphaPlayerOne
- */
+
 public class ContaInvestimento extends Conta{
-    // -------------------Atributos:------------------- //
+
     private double montanteMinimo;
     private double depositoMinimo;
     
-    private static List<ContaInvestimento> contasInvestimento = new ArrayList();
-// --------------------Metodos:------------------ //   
-    @Override
-    public boolean deposita(double valor){
-        if(valor >= depositoMinimo){ 
-            super.deposita(valor);
-            return true;
-        }
-        return false;   // mostrar mensagem do erro para o usuario
-    }
-    @Override
-    public boolean saca(double valor) {
-        if((super.saldo - valor) >= montanteMinimo){ 
-            super.saca(valor);
-            return true;
-        }
-        return false;   // se for false, temos que mostrar um informativo do erro ao cliente 
-    }
-    @Override
-    public void remunera(){
-        super.saldo += (super.saldo * 0.02);    // remuneracao de 2%
-    } 
-// ------------------Constructor:---------------- //
-   public ContaInvestimento(Cliente dono, double depositoInicial, double montanteMinimo, double depositoMinimo){
-        super(dono, depositoInicial);
+     public ContaInvestimento(Cliente cliente, double montanteMinimo, double depositoMinimo, int id, double saldo){
+        super(cliente,id,saldo);
         this.montanteMinimo = montanteMinimo;
         this.depositoMinimo = depositoMinimo;
     }
-   
     
-    public static void addContaInvestimento(ContaInvestimento conta) {
-        contasInvestimento.add(conta);
+      public ContaInvestimento(Cliente cliente, double montanteMinimo, double depositoMinimo){
+        super(cliente);
+        this.montanteMinimo = montanteMinimo;
+        this.depositoMinimo = depositoMinimo;
     }
+    
+    @Override
+    public boolean deposita(double valor) throws SQLException{
+        Connection con = null;
+        if(valor >= depositoMinimo){ 
+            double newSaldo = this.saldo + valor;
+             try {
+                con = ConnectionFactory.getConnection();            
+
+                 String sql = "UPDATE ContaInvestimento SET saldo = ? WHERE id = ?";
+                 PreparedStatement stmt = con.prepareStatement(sql);
+                 stmt.setString(1, String.valueOf(newSaldo));
+                 stmt.setString(2, String.valueOf(this.getNumero()));
+                 
+                 stmt.executeUpdate();
+            }catch(SQLException ex) {
+                System.out.println("Problemas ao Depositar");
+                ex.printStackTrace();
+            }finally{
+                con.close();
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean saca(double valor) throws SQLException {
+        if((super.saldo - valor) >= montanteMinimo){ 
+             Connection con = null;
+             double newSaldo = this.saldo - valor;
+       
+            try {
+                con = ConnectionFactory.getConnection();            
+
+                 String sql = "UPDATE ContaInvestimento SET saldo = ? WHERE id = ?";
+                 PreparedStatement stmt = con.prepareStatement(sql);
+                 stmt.setString(1, String.valueOf(newSaldo));
+                 stmt.setString(2, String.valueOf(this.getNumero()));
+                 
+                 stmt.executeUpdate();
+            }catch(SQLException ex) {
+                System.out.println("Problemas ao Sacar");
+                ex.printStackTrace();
+            }finally{
+                con.close();
+            }
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public void remunera() throws SQLException{
+         Connection con = null;
+        double newSaldo = super.saldo += (super.saldo * 0.02);
+        
+         try {
+                con = ConnectionFactory.getConnection();            
+
+                 String sql = "UPDATE ContaInvestimento SET saldo = ? WHERE id = ?";
+                 PreparedStatement stmt = con.prepareStatement(sql);
+                 stmt.setString(1, String.valueOf(newSaldo));
+                 stmt.setString(2, String.valueOf(this.getNumero()));
+                 
+                 stmt.executeUpdate();
+                 
+            }catch(SQLException ex) {
+                System.out.println("Problemas ao Remunerar");
+                ex.printStackTrace();
+            }finally{
+                con.close();
+            }
+    } 
 
     public double getMontanteMinimo() {
         return montanteMinimo;
@@ -66,13 +118,13 @@ public class ContaInvestimento extends Conta{
         this.depositoMinimo = depositoMinimo;
     }
 
-    public static List<ContaInvestimento> getContasInvestimento() {
-        return contasInvestimento;
+    public double getSaldo() {
+        return saldo;
     }
 
-    public static void setContasInvestimento(List<ContaInvestimento> contasInvestimento) {
-        ContaInvestimento.contasInvestimento = contasInvestimento;
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
-    
+   
     
 }

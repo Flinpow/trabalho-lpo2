@@ -6,6 +6,7 @@ package com.mycompany.bancojdbc.view;
 
 import com.mycompany.bancojdbc.model.Cliente;
 import com.mycompany.bancojdbc.model.ContaCorrente;
+import com.mycompany.bancojdbc.model.ContaInvestimento;
 import controller.ContaController;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -13,26 +14,28 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
-public class ContaCorrenteView extends javax.swing.JFrame {
-    public static ContaCorrente contaCorrente; 
+public class ContaInvestimentoView extends javax.swing.JFrame {
+    public static ContaInvestimento contaInvestimento; 
     
     /**
      * Creates new form ContaCorrenteView
      */
-    public ContaCorrenteView(ContaCorrente contaCorrente) {
+    public ContaInvestimentoView(ContaInvestimento conta) {
         initComponents();
-        this.contaCorrente = contaCorrente;
-        Cliente cliente = contaCorrente.getDono();
+        this.contaInvestimento = conta;
+        Cliente cliente = conta.getDono();
         clienteNameLabel.setText(cliente.getNome() + " " + cliente.getSobreNome());
         cpfLabel.setText(cliente.getCPF());
-        nContaLabel.setText(String.valueOf(contaCorrente.getNumero()));
+        nContaLabel.setText(String.valueOf(conta.getNumero()));
+        montanteMinLabel.setText(String.valueOf(conta.getMontanteMinimo()));
+        depositoMinLabel.setText(String.valueOf(conta.getDepositoMinimo()));
        //Alterando tamanho e posicionamento da tela
         this.setSize(800, 800);
         this.setLocationRelativeTo(null);
         
         sacarBtn.setToolTipText("Insira o valor a ser sacado.");
         depositarBtn.setToolTipText("Insira o valor a ser depositado.");
-        remuneraBtn.setToolTipText("Aplicar remuneração de 1% ao saldo da conta.");
+        remuneraBtn.setToolTipText("Aplicar remuneração de 2% ao saldo da conta.");
     }
 
     /**
@@ -59,6 +62,10 @@ public class ContaCorrenteView extends javax.swing.JFrame {
         saldoBtn = new javax.swing.JButton();
         remuneraBtn = new javax.swing.JButton();
         voltarBtn = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        depositoMinLabel = new javax.swing.JLabel();
+        montanteMinLabel = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -71,7 +78,7 @@ public class ContaCorrenteView extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Conta Corrente");
+        jLabel1.setText("Conta Investimento");
 
         clienteNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -130,64 +137,78 @@ public class ContaCorrenteView extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Depósito Mínimo (R$)");
+
+        jLabel8.setText("Montante Mínimo (R$)");
+
+        depositoMinLabel.setText("jLabel9");
+
+        montanteMinLabel.setText("jLabel10");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(103, 103, 103)
-                                    .addComponent(jLabel5)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(valorTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(53, 53, 53)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(voltarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                                        .addComponent(sacarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(depositarBtn)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(saldoBtn)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(remuneraBtn)))
-                            .addGap(0, 89, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(105, 105, 105)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cpfLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-                                .addComponent(clienteNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(voltarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                            .addComponent(sacarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(depositarBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saldoBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(remuneraBtn))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(valorTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cpfLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(clienteNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nContaLabel)
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(87, 87, 87)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nContaLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(depositoMinLabel)
+                                    .addComponent(montanteMinLabel))))))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(nContaLabel)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(45, 45, 45)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(nContaLabel)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(depositoMinLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(montanteMinLabel))
+                .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(clienteNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -199,13 +220,13 @@ public class ContaCorrenteView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(valorTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sacarBtn)
                     .addComponent(depositarBtn)
                     .addComponent(saldoBtn)
                     .addComponent(remuneraBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 298, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 336, Short.MAX_VALUE)
                 .addComponent(voltarBtn)
                 .addGap(25, 25, 25))
         );
@@ -246,11 +267,11 @@ public class ContaCorrenteView extends javax.swing.JFrame {
     }//GEN-LAST:event_valorTxtActionPerformed
 
     private void saldoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saldoBtnActionPerformed
-       JOptionPane.showMessageDialog(null,"Seu Saldo é de: R$" + String.format("%.2f", contaCorrente.getSaldo()));
+       JOptionPane.showMessageDialog(null,"Seu Saldo é de: R$" + String.format("%.2f", contaInvestimento.getSaldo()));
     }//GEN-LAST:event_saldoBtnActionPerformed
 
     private void remuneraBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remuneraBtnActionPerformed
-        ContaController.remunerarContaCorrente(contaCorrente);
+  //      ContaController.remunerarContaCorrente(conta);
     }//GEN-LAST:event_remuneraBtnActionPerformed
 
     private void sacarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sacarBtnActionPerformed
@@ -260,8 +281,8 @@ public class ContaCorrenteView extends javax.swing.JFrame {
         } else {
             try{
                 double valorD = Double.valueOf(valor);
-                if (ContaController.sacarContaCorrente(contaCorrente, valorD)) {
-                    contaCorrente.setSaldo(contaCorrente.getSaldo() - valorD);
+                if (ContaController.sacarContaInvestimento(contaInvestimento, valorD)) {
+                    contaInvestimento.setSaldo(contaInvestimento.getSaldo() - valorD);
                     valorTxt.setText("");
                 } 
  
@@ -275,7 +296,7 @@ public class ContaCorrenteView extends javax.swing.JFrame {
         try {
             new ClienteView().setVisible(true);
         } catch (SQLException ex) {
-            Logger.getLogger(ContaCorrenteView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContaInvestimentoView.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setVisible(false);
     }//GEN-LAST:event_voltarBtnActionPerformed
@@ -287,11 +308,10 @@ public class ContaCorrenteView extends javax.swing.JFrame {
         } else {
             try{
                 double valorD = Double.valueOf(valor);
-                if (ContaController.depositarContaCorrente(contaCorrente, valorD)) {
-                    contaCorrente.setSaldo(contaCorrente.getSaldo() + valorD);
+                if (ContaController.depositarContaInvestimento(contaInvestimento, valorD)) {
+                    contaInvestimento.setSaldo(contaInvestimento.getSaldo() + valorD);
                     valorTxt.setText("");
                 }
- 
             }catch(NumberFormatException e){
                 JOptionPane.showMessageDialog(null,"Insira um valor válido!");
             }
@@ -315,20 +335,21 @@ public class ContaCorrenteView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ContaCorrenteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContaInvestimentoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ContaCorrenteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContaInvestimentoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ContaCorrenteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContaInvestimentoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ContaCorrenteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ContaInvestimentoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ContaCorrenteView(contaCorrente).setVisible(true);
+                new ContaInvestimentoView(contaInvestimento).setVisible(true);
             }
         });
     }
@@ -337,13 +358,17 @@ public class ContaCorrenteView extends javax.swing.JFrame {
     private javax.swing.JLabel clienteNameLabel;
     private javax.swing.JLabel cpfLabel;
     private javax.swing.JButton depositarBtn;
+    private javax.swing.JLabel depositoMinLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel montanteMinLabel;
     private javax.swing.JLabel nContaLabel;
     private javax.swing.JButton remuneraBtn;
     private javax.swing.JButton sacarBtn;

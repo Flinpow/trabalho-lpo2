@@ -21,9 +21,9 @@ import java.util.logging.Logger;
  * @author AlphaPlayerOne
  */
 public class ContaDao {
-    ContaInvestimento contaInvestimento;
-    ContaCorrente contaCorrente;
+
     
+ //METODOS CONTA CORRENTE   
     public static void addContaCorrente (ContaCorrente contaCorrente, double depositoInicial) throws SQLException {
         Connection con = null;
        
@@ -44,30 +44,6 @@ public class ContaDao {
            con.close();
         }
     }
-    
-     public static void addContaInvestimento (ContaInvestimento contaInvestimento, double depositoInicial) throws SQLException {
-        Connection con = null;
-       
-       try {
-           con = ConnectionFactory.getConnection();            
-           
-            String sql = "INSERT INTO ContaInvestimento(saldo,clienteFk, montanteMinimo,depositoMinimo) VALUES (?,?,?,?)";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, String.valueOf(depositoInicial));
-            stmt.setString(2, contaInvestimento.getDono().getCPF());
-            stmt.setString(3, String.valueOf(contaInvestimento.getMontanteMinimo()));
-            stmt.setString(4, String.valueOf(contaInvestimento.getDepositoMinimo()));
-            
-            stmt.executeUpdate();
-       }catch(SQLException ex) {
-           System.out.println("Problemas ao salvar Conta Investimento");
-           ex.printStackTrace();
-       }finally{
-           con.close();
-       }
-    }
-     
-
    
  public static ContaCorrente getContaCorrenteByCpf(String cpf) throws SQLException {
         Connection con = null;
@@ -89,7 +65,52 @@ public class ContaDao {
         }
         return null;
    }
+ // ---FIM---
  
+ // METODOS DE CONTA INVESTIMENTO
+    public static void addContaInvestimento (ContaInvestimento contaInvestimento, double depositoInicial) throws SQLException {
+        Connection con = null;
+       
+       try {
+           con = ConnectionFactory.getConnection();            
+           
+            String sql = "INSERT INTO ContaInvestimento(saldo,clienteFk, montanteMinimo,depositoMinimo) VALUES (?,?,?,?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, String.valueOf(depositoInicial));
+            stmt.setString(2, contaInvestimento.getDono().getCPF());
+            stmt.setString(3, String.valueOf(contaInvestimento.getMontanteMinimo()));
+            stmt.setString(4, String.valueOf(contaInvestimento.getDepositoMinimo()));
+            
+            stmt.executeUpdate();
+       }catch(SQLException ex) {
+           System.out.println("Problemas ao salvar Conta Investimento");
+           ex.printStackTrace();
+       }finally{
+           con.close();
+       }
+    }
+    
+    public static ContaInvestimento getContaInvestimentoByCpf(String cpf) throws SQLException {
+          Connection con = null;
+          ContaInvestimento conta = null;
+          try {
+              con = ConnectionFactory.getConnection();
+              String sql = "SELECT * FROM ContaInvestimento WHERE clienteFk = ?";
+              PreparedStatement stmt = con.prepareStatement(sql);
+              stmt.setString(1,cpf);
+              ResultSet rs = stmt.executeQuery();
+              while(rs.next()) {
+                  conta = new ContaInvestimento(ClienteDao.getClienteByCpf(cpf), Double.valueOf(rs.getString("montanteMinimo")),Double.valueOf(rs.getString("depositoMinimo")), Integer.valueOf(rs.getString("id")),Double.valueOf(rs.getString("saldo")));            
+                  return conta;
+               }
+          } catch (SQLException ex) {
+              Logger.getLogger(ContaDao.class.getName()).log(Level.SEVERE, null, ex);
+          } finally {
+              con.close();
+          }
+          return null;
+     }
+  // ---FIM---
     public static void excluirContasDoCliente(String cpf) throws SQLException {
         Connection con = null;
         
@@ -97,6 +118,10 @@ public class ContaDao {
             con = ConnectionFactory.getConnection();
             String sql = "DELETE FROM ContaCorrente WHERE clienteFk = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1,cpf);
+            stmt.executeUpdate();
+            sql = "DELETE FROM ContaInvestimento WHERE clienteFk = ?";
+            stmt = con.prepareStatement(sql);
             stmt.setString(1,cpf);
             stmt.executeUpdate();
         } catch (SQLException ex) {
