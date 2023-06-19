@@ -344,16 +344,10 @@ public class ClienteView extends javax.swing.JFrame {
     private void excluiBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluiBtnActionPerformed
         Cliente cliente = getCliente();
         try {
-            if(!cpfTxt.getText().trim().strip().isBlank()) {
-
-                    if(cliente != null) {
-                        int reply = JOptionPane.showConfirmDialog(null,"Deseja realmente excluir este cliente?\n(Todas as contas vinculadas a este cliente serao apagadas)", "Confirmação", JOptionPane.YES_OPTION);
-                        if(reply == JOptionPane.YES_OPTION)
-                            ClienteController.excluirCliente(cliente.getCPF());
-                    } else {  
-                        JOptionPane.showMessageDialog(null,"O CPF informado não corresponde a nenhum Cliente no banco!");
-                    }
-
+            if(!cpfTxt.getText().trim().strip().isBlank() && cliente != null) {
+                int reply = JOptionPane.showConfirmDialog(null,"Deseja realmente excluir este cliente?\n(Todas as contas vinculadas a este cliente serao apagadas)", "Confirmação", JOptionPane.YES_OPTION);
+                if(reply == JOptionPane.YES_OPTION)
+                ClienteController.excluirCliente(cliente.getCPF());
             }else {
                 JOptionPane.showMessageDialog(null,"Selecione um cliente a ser excluido!");
             }
@@ -468,7 +462,7 @@ public class ClienteView extends javax.swing.JFrame {
         try {
             String cpf = cpfTxt.getText().replaceAll("[.-]", "");
             if(cpf.trim().isBlank()){
-                JOptionPane.showMessageDialog(null,"Nenhum cliente corresponde ao CPF informado!", "Erro",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Nenhum cliente corresponde ao CPF informado!", "Erro",JOptionPane.WARNING_MESSAGE);
             }else{
                 cliente = ClienteDao.getClienteByCpf(cpf);
             }

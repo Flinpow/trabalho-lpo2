@@ -267,11 +267,11 @@ public class ContaInvestimentoView extends javax.swing.JFrame {
     }//GEN-LAST:event_valorTxtActionPerformed
 
     private void saldoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saldoBtnActionPerformed
-       JOptionPane.showMessageDialog(null,"Seu Saldo é de: R$" + String.format("%.2f", contaInvestimento.getSaldo()));
+       JOptionPane.showMessageDialog(null,"Seu Saldo é de: R$" + String.format("%.2f", contaInvestimento.getSaldo( )).replaceAll(",", ".//"));
     }//GEN-LAST:event_saldoBtnActionPerformed
 
     private void remuneraBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remuneraBtnActionPerformed
-  //      ContaController.remunerarContaCorrente(conta);
+        ContaController.remunerarContaInvestimento(contaInvestimento);
     }//GEN-LAST:event_remuneraBtnActionPerformed
 
     private void sacarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sacarBtnActionPerformed
